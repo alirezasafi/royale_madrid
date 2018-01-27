@@ -746,6 +746,7 @@ x1 = 640
 y1 = 395
 x2 = 665
 y2 = 273
+playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
@@ -761,7 +762,9 @@ while True:
         if 483 < mousepos[0] < 777 and 465 < mousepos[1] < 574 and mouseState[0] == True:
             start_battle = True
             start_sound.stop()
-            battle_sound.play(-1)
+            if playSound == True :
+                battle_sound.play(-1)
+                playSound = False
     joystuck_count = pygame.joystick.get_count()
     # for i in range(1):
     joystick = pygame.joystick.Joystick(0)
