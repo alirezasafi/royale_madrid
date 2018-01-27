@@ -631,6 +631,7 @@ windowheight = 605
 window = pygame.display.set_mode((windowwidth, windowheight), pygame.FULLSCREEN)
 battleScreen = pygame.image.load('battle Screen.jpg')
 start_Screen = pygame.image.load('start_Screen.jpg')
+guidance = pygame.image.load('guidance.png')
 one = pygame.image.load('1.png')
 two = pygame.image.load('2.png')
 three = pygame.image.load('3.png')
@@ -740,7 +741,7 @@ def timer2():
     window.blit(txt, (90, 30))
     dt = clock.tick(250) / 100
 
-
+draw_guidance = False
 start_battle = False
 x1 = 640
 y1 = 395
@@ -750,6 +751,7 @@ playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
+    print(mousepos)
     window.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -759,6 +761,9 @@ while True:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
+        if 460 < mousepos[0] < 780 and 185 < mousepos[1] < 277 and mouseState[0] == True:
+            start_battle = False
+            draw_guidance = True
         if 483 < mousepos[0] < 777 and 465 < mousepos[1] < 574 and mouseState[0] == True:
             start_battle = True
             start_sound.stop()
@@ -805,13 +810,18 @@ while True:
             y2 -= 5
         if hat2[1] == -1:
             y2 += 5
-
         draw_game()
         timer2()
         # print(tower2.healthtowers['tower2'])
 
-        # print(mousepos)
-
+    elif draw_guidance == True:
+        window.blit(guidance,(100,0))
+        if 117 < mousepos[0] < 252 and 58 < mousepos[1] < 188 and mouseState[0] == True:
+            start_battle = True
+            start_sound.stop()
+            if playSound == True:
+                battle_sound.play(-1)
+                playSound = False
     else:
         window.blit(start_Screen, (0, 0))
     pygame.display.update()
