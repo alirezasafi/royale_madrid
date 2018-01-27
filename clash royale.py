@@ -505,6 +505,11 @@ windowheight = 605
 window = pygame.display.set_mode((windowwidth,windowheight),pygame.FULLSCREEN)
 battleScreen = pygame.image.load('battle Screen.jpg')
 start_Screen = pygame.image.load('start_Screen.jpg')
+one = pygame.image.load('1.png')
+two = pygame.image.load('2.png')
+three = pygame.image.load('3.png')
+blue_crown = pygame.image.load('blue_crown.png')
+red_crown = pygame.image.load('red_crown.png')
 timer_icon = pygame.image.load('timer_icon.png')
 timer_box = pygame.image.load('timer_box.png')
 player = player(windowwidth/2 ,windowheight/2 ,pygame ,window)
@@ -543,6 +548,41 @@ def draw_game():
     window.blit(box2, (11, 67))
     window.blit(timer_icon, (10, 20))
     window.blit(timer_box, (80, 20))
+    score1 = False
+    score2 = False
+    score3 = False
+    score4 = False
+
+    # window.blit(two, (150, 350))
+    # window.blit(one, (0, 0))
+    if tower1.healthtowers['tower1'] <= 0 or tower2.healthtowers['tower2'] <= 0:
+        score1 = True
+    if tower1.healthtowers['tower1'] <= 0 and tower2.healthtowers['tower2'] <= 0:
+        score1 = False
+        score2 = True
+    if tower3.healthtowers['tower3'] <= 0 or tower4.healthtowers['tower4'] <= 0:
+        score3 = True
+    if tower3.healthtowers['tower3'] <= 0 and tower4.healthtowers['tower4'] <= 0:
+        score3 = False
+        score4 = True
+    if score1 == True:
+        window.blit(one, (1050, 213))
+        window.blit(red_crown, (1050, 177))
+    if score2 == True:
+        window.blit(two, (1040, 205))
+        window.blit(red_crown, (1050, 177))
+    if score3 == True:
+        window.blit(one, (1050, 350))
+        window.blit(blue_crown, (1050, 310))
+    if score4 == True:
+        window.blit(two, (1040, 340))
+        window.blit(blue_crown, (1050, 310))
+    if score1 == False and score2 == False:
+        window.blit(red_crown, (1050, 200))
+        # window.blit(zero , (1060,213))
+    if score3 == False and score4 == False:
+        window.blit(blue_crown, (1050, 333))
+        # window.blit(zero , (1055,350))
     player.push()
     player2.push()
     player.click(L1,L2,R1,R2,X,x1,y1)
