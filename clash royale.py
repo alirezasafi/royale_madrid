@@ -201,6 +201,9 @@ class player2():
         self.X = False
         self.coordients = {'x': None, 'y': None}
         self.soldiers = []
+        self.elixir = {'elixir1': None, 'elixir2': None, 'elixir3': None, 'elixir4': None}
+        self.num_elixir = {'num1': None, 'num2': None, 'num3': None, 'num4': None}
+        self.right_choice = False
 
     def blitheroes(self, image, x, y):
         image = self.pygame.image.load(str(image) + '.jpg')
@@ -226,6 +229,27 @@ class player2():
         self.blitheroes(str(self.heroes_push[3]) + 'Card', 282, 80)
 
     def click(self, L1, L2, R1, R2, X, x, y):
+        if int(timer) % 3 == 0 and self.elixir['elixir1'] == None:
+            self.elixir['elixir1'] = True
+            self.num_elixir['num1'] = int(timer)
+        if int(timer) % 3 == 0 and self.elixir['elixir1'] == True and self.elixir['elixir2'] == None:
+            if int(timer) != self.num_elixir['num1']:
+                self.elixir['elixir2'] = True
+                self.num_elixir['num2'] = int(timer)
+        if int(timer) % 3 == 0 and self.elixir['elixir2'] == True and self.elixir['elixir3'] == None:
+            if int(timer) != self.num_elixir['num1'] and int(timer) != self.num_elixir['num2']:
+                self.elixir['elixir3'] = True
+                self.num_elixir['num3'] = int(timer)
+        if int(timer) % 3 == 0 and self.elixir['elixir3'] == True and self.elixir['elixir4'] == None:
+            if int(timer) != self.num_elixir['num1'] and int(timer) != self.num_elixir['num2'] and int(timer) != \
+                    self.num_elixir['num3']:
+                self.elixir['elixir4'] = True
+                self.num_elixir['num4'] = int(timer)
+        if self.elixir['elixir1'] == True and self.elixir['elixir2'] == True and self.elixir['elixir3'] == True and \
+                self.elixir['elixir4'] == True:
+            self.right_choice = True
+        else:
+            self.right_choice = False
         if len(self.check) == 1:
             self.selecthero1 = False
             self.selecthero2 = False
@@ -266,29 +290,53 @@ class player2():
             self.replace4 = True
         if self.selecthero1 == True:
             self.pointer_position(x, y)
-            if X == 1 and self.X == False:
+            if X == 1 and self.X == False and self.right_choice == True:
                 self.selecthero1 = False
                 self.replace1 = False
                 self.soldiers.append(soldier(x - 17, y - 20, self.pygame, self.surface, self.heroes[3]))
+                self.elixir['elixir1'] = None
+                self.elixir['elixir2'] = None
+                self.elixir['elixir3'] = None
+                self.elixir['elixir4'] = None
 
         if self.selecthero2 == True:
             self.pointer_position(x, y)
-            if X == 1 and self.X == False:
+            if X == 1 and self.X == False and self.right_choice == True:
                 self.selecthero2 = False
                 self.replace2 = False
                 self.soldiers.append(soldier(x - 17, y - 20, self.pygame, self.surface, self.heroes[3]))
+                self.elixir['elixir1'] = None
+                self.elixir['elixir2'] = None
+                self.elixir['elixir3'] = None
+                self.elixir['elixir4'] = None
         if self.selecthero3 == True:
             self.pointer_position(x, y)
-            if X == 1 and self.X == False:
+            if X == 1 and self.X == False and self.right_choice == True:
                 self.selecthero3 = False
                 self.replace3 = False
                 self.soldiers.append(soldier(x - 17, y - 20, self.pygame, self.surface, self.heroes[3]))
+                self.elixir['elixir1'] = None
+                self.elixir['elixir2'] = None
+                self.elixir['elixir3'] = None
+                self.elixir['elixir4'] = None
         if self.selecthero4 == True:
             self.pointer_position(x, y)
-            if X == 1 and self.X == False:
+            if X == 1 and self.X == False and self.right_choice == True:
                 self.selecthero4 = False
                 self.replace4 = False
                 self.soldiers.append(soldier(x - 17, y - 20, self.pygame, self.surface, self.heroes[3]))
+                self.elixir['elixir1'] = None
+                self.elixir['elixir2'] = None
+                self.elixir['elixir3'] = None
+                self.elixir['elixir4'] = None
+        if self.elixir['elixir1'] == True:
+            self.surface.blit(elixir, (13, 178))
+        if self.elixir['elixir2'] == True:
+            self.surface.blit(elixir, (102, 178))
+        if self.elixir['elixir3'] == True:
+            self.surface.blit(elixir, (191, 178))
+        if self.elixir['elixir4'] == True:
+            self.surface.blit(elixir, (280, 178))
 
     def pointer_position(self, x, y):
         self.pygame.draw.circle(self.surface, (255, 255, 255), (x, y), 5, 0)
@@ -698,7 +746,6 @@ x1 = 640
 y1 = 395
 x2 = 665
 y2 = 273
-playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
@@ -714,9 +761,7 @@ while True:
         if 483 < mousepos[0] < 777 and 465 < mousepos[1] < 574 and mouseState[0] == True:
             start_battle = True
             start_sound.stop()
-            if playSound == True:
-                battle_sound.play(-1)
-                playSound = False
+            battle_sound.play(-1)
     joystuck_count = pygame.joystick.get_count()
     # for i in range(1):
     joystick = pygame.joystick.Joystick(0)
