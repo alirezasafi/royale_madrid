@@ -512,6 +512,7 @@ blue_crown = pygame.image.load('blue_crown.png')
 red_crown = pygame.image.load('red_crown.png')
 timer_icon = pygame.image.load('timer_icon.png')
 timer_box = pygame.image.load('timer_box.png')
+destroyed_tower = pygame.image.load('tower destroyed.jpg')
 player = player(windowwidth/2 ,windowheight/2 ,pygame ,window)
 player2 = player2(windowwidth/2,windowheight/2,pygame,window)
 start_sound = pygame.mixer.Sound('menu.ogg')
@@ -525,29 +526,27 @@ tower1 = tower(548,420,pygame,window)
 tower2 = tower(765,420,pygame,window)
 tower3 = tower(548,148,pygame,window)
 tower4 = tower(765,148,pygame,window)
+def destroyedTower():
+    if tower1.healthtowers['tower1'] <= 0 :
+        window. blit(destroyed_tower, (500,420))
+    if tower2.healthtowers['tower2'] <= 0:
+        window.blit(destroyed_tower, (720,420))
+    if tower3.healthtowers['tower3'] <= 0 :
+        window.blit(destroyed_tower, (500,102))
+    if tower4.healthtowers['tower4'] <= 0:
+        window.blit(destroyed_tower, (720,100))
 
-timer = 100
-dt = 0
-def timer2():
-    global timer,dt
-    clock = pygame.time.Clock()
-    font = pygame.font.Font(None, 40)
-    blue = pygame.Color('red')
-
-    timer -= dt
-    if timer <= 0:
-        timer = 0
-    txt = font.render(str(round(timer, 1)), True, blue)
-    window.blit(txt, (90, 30))
-    dt = clock.tick(250) / 100
 
 def draw_game():
+    global score1,score2,score3,score4
     global hat ,x ,y
-    window.blit(battleScreen,(0,0))
-    window.blit(box,(934,475))
+    window.blit(battleScreen, (0, 0))
+    window.blit(box, (934, 475))
     window.blit(box2, (11, 67))
     window.blit(timer_icon, (10, 20))
     window.blit(timer_box, (80, 20))
+    destroyedTower()
+    
     score1 = False
     score2 = False
     score3 = False
@@ -593,6 +592,22 @@ def draw_game():
     tower2.drawDownToUp()
     tower3.drawUpToDown()
     tower4.drawUpToDown()
+
+timer = 100
+dt = 0
+def timer2():
+    global timer,dt
+    clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 40)
+    blue = pygame.Color('red')
+
+    timer -= dt
+    if timer <= 0:
+        timer = 0
+    txt = font.render(str(round(timer, 1)), True, blue)
+    window.blit(txt, (90, 30))
+    dt = clock.tick(250) / 100
+
 start_battle = False
 x1 = 640
 y1= 395
