@@ -369,53 +369,137 @@ class soldier():
         self.surface.blit(image, (self.x, self.y))
 
     def moveplayer1(self):
-        if 470 < self.x < 536:
-            self.x += 1
-        if 536 < self.x < 670:
-            self.x -= 1
-        if 670 < self.x < 753:
-            self.x += 1
-        if 753 < self.x < 865:
-            self.x -= 1
-        if 260 < self.y < 680 and (self.x == 536 or self.x == 753):
-            self.y -= 1
-
+        if tower3.healthtowers['tower3']>0:
+            if 470 < self.x < 536:
+                self.x += 1
+            if 536 < self.x < 670:
+                self.x -= 1
+            if 260 < self.y < 680 and self.x == 536:
+                self.y -= 1
+        if tower4.healthtowers['tower4']>0:
+            if 670 < self.x < 753:
+                self.x += 1
+            if 753 < self.x < 865:
+                self.x -=1
+            if 260 < self.y < 680 and self.x == 753:
+                self.y -= 1
+        if tower3.healthtowers['tower3']<=0:
+            if 470 < self.x < 536 and self.y !=180 and self.y!=260:
+                self.x += 1
+            if 536 < self.x < 670 and self.y!=180 and self.y!=260:
+                self.x -= 1
+            if self.y > 180 and tower4.healthtowers['tower4']<=0:
+                self.y-=1
+            if self.y == 180 and self.x <650:
+                self.x += 1
+        if tower4.healthtowers['tower4']<=0:
+            if 670 < self.x < 753 and self.y!=180  and self.y!=260:
+                self.x += 1
+            if 753 < self.x < 865 and self.y !=180 and self.y !=260:
+                self.x -=1
+            if self.y == 180 and self.x > 650:
+                self.x -= 1
+            if self.y > 180 and tower3.healthtowers['tower3']<=0:
+                self.y -= 1
     def moveplayer2(self):
-        if 65 < self.y < 325 and (self.x == 536 or self.x == 753):
-            self.y += 1
-        if 470 < self.x < 536:
-            self.x += 1
-        if 536 < self.x < 670:
-            self.x -= 1
-        if 670 < self.x < 753:
-            self.x += 1
-        if 753 < self.x < 865:
-            self.x -= 1
-
+        if tower1.healthtowers['tower1']>0:
+            if 470 < self.x < 536:
+                self.x += 1
+            if 536 < self.x < 670:
+                self.x -= 1
+            if 65 < self.y < 325 and self.x == 536:
+                self.y += 1
+        if tower2.healthtowers['tower2']>0:
+            if 670 < self.x < 753:
+                self.x += 1
+            if 753 < self.x < 865:
+                self.x -=1
+            if 65 < self.y < 325 and self.x == 753:
+                self.y += 1
+        if tower1.healthtowers['tower1']<=0:
+            if 470 < self.x < 536 and self.y !=385 and self.y!=325:
+                self.x += 1
+            if 536 < self.x < 670 and self.y!=385 and self.y!=325:
+                self.x -= 1
+            if self.y < 385 and tower2.healthtowers['tower2']<=0:
+                self.y+=1
+            if self.y == 385 and self.x <650:
+                self.x += 1
+        if tower2.healthtowers['tower2']<=0:
+            if 670 < self.x < 753 and self.y!=385  and self.y!=325:
+                self.x += 1
+            if 753 < self.x < 865 and self.y !=385 and self.y !=325:
+                self.x -=1
+            if self.y == 385 and self.x > 650:
+                self.x -= 1
+            if self.y < 385 and tower1.healthtowers['tower1']<=0:
+                self.y += 1
     def moveplayer2Unarmed(self):
-        if 65 < self.y < 382 and (self.x == 536 or self.x == 753):
-            self.y += 1
-        if 470 < self.x < 536:
-            self.x += 1
-        if 536 < self.x < 670:
-            self.x -= 1
-        if 670 < self.x < 753:
-            self.x += 1
-        if 753 < self.x < 865:
-            self.x -= 1
-
+        if tower1.healthtowers['tower1']>0:
+            if 470 < self.x < 536:
+                self.x += 1
+            if 536 < self.x < 670:
+                self.x -= 1
+            if 65 < self.y < 385 and self.x == 536:
+                self.y += 1
+        if tower2.healthtowers['tower2']>0:
+            if 670 < self.x < 753:
+                self.x += 1
+            if 753 < self.x < 865:
+                self.x -=1
+            if 65 < self.y < 385 and self.x == 753:
+                self.y += 1
+        if tower1.healthtowers['tower1']<=0 :
+            if 470 < self.x < 536 and self.y !=385 and self.y !=490:
+                self.x += 1
+            if 536 < self.x < 670 and self.y!=385 and self.y != 490:
+                self.x -= 1
+            if self.y == 490 and self.x < 595:
+                self.x += 1
+            if self.y < 490 and tower2.healthtowers['tower2']<=0:
+                self.y += 1
+        if tower2.healthtowers['tower2']<=0:
+            if 670 < self.x < 753 and self.y!=490  and self.y!=385:
+                self.x += 1
+            if 753 < self.x < 865 and self.y !=490 and self.y !=385:
+                self.x -=1
+            if self.y == 490 and self.x > 690:
+                self.x -= 1
+            if self.y < 490 and tower1.healthtowers['tower1']<=0:
+                self.y += 1
     def moveplayer1Unarmed(self):
-        if 470 < self.x < 536:
-            self.x += 1
-        if 536 < self.x < 670:
-            self.x -= 1
-        if 670 < self.x < 753:
-            self.x += 1
-        if 753 < self.x < 865:
-            self.x -= 1
-        if 180 < self.y < 680 and (self.x == 536 or self.x == 753):
-            self.y -= 1
-
+        if tower3.healthtowers['tower3']>0:
+            if 470 < self.x < 536:
+                self.x += 1
+            if 536 < self.x < 670:
+                self.x -= 1
+            if 180 < self.y < 680 and self.x == 536:
+                self.y -= 1
+        if tower4.healthtowers['tower4']>0:
+            if 670 < self.x < 753:
+                self.x += 1
+            if 753 < self.x < 865:
+                self.x -=1
+            if 180 < self.y < 680 and self.x == 753:
+                self.y -= 1
+        if tower3.healthtowers['tower3']<=0 :
+            if 470 < self.x < 536 and self.y !=180 and self.y !=90:
+                self.x += 1
+            if 536 < self.x < 670 and self.y!=180 and self.y != 90:
+                self.x -= 1
+            if self.y == 90 and self.x < 595:
+                self.x += 1
+            if self.y > 90 and tower4.healthtowers['tower4']<=0:
+                self.y -= 1
+        if tower4.healthtowers['tower4']<=0:
+            if 670 < self.x < 753 and self.y!=90  and self.y!=180:
+                self.x += 1
+            if 753 < self.x < 865 and self.y !=90 and self.y !=180:
+                self.x -=1
+            if self.y == 90 and self.x > 690:
+                self.x -= 1
+            if self.y > 90 and tower3.healthtowers['tower3']<=0:
+                self.y -= 1
     def healthheroes(self):
         if self.y == 260 and self.x == 536:
             if int(timer) % 2 == 0 and self.health[str(self.image)] > 0 and tower3.healthtowers['tower3'] > 0:
@@ -475,6 +559,36 @@ class soldier():
                 if self.image == 'hunter':
                     tower3.healthtowers['tower2'] -= 4
                 self.health[str(self.image)] -= 5
+        elif self.y == 180 and self.x == 650 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
+            if int(timer)%2 == 0:
+                main_towerUp.fireUpToDown()
+                main_towerUp.drawFrommainTowerU()
+                self.health[str(self.image)] -= 5
+                self.fireTomainTowerUp()
+                self.drawTomainTowerUp()
+                if self.image == 'Wizard':
+                    main_towerUp.healthtowers['main_towerUp'] -= 4
+                if self.image == 'Archer':
+                    main_towerUp.healthtowers['main_towerUp'] -= 2
+                if self.image == 'Musketeers':
+                    main_towerUp.healthtowers['main_towerUp'] -= 4
+                if self.image == 'hunter':
+                    main_towerUp.healthtowers['main_towerUp'] -= 4
+        elif self.y == 385 and self.x == 650 and self.health[str(self.image)]>0 and main_towerDown.healthtowers['main_towerDown']>0:
+            if int(timer)%2 == 0:
+                main_towerDown.fireDownToUp()
+                main_towerDown.drawFrommainTowerD()
+                self.health[str(self.image)] -= 5
+                self.fireTomainTowerDown()
+                self.drawTomainTowerDown()
+                if self.image == 'Wizard':
+                    main_towerDown.healthtowers['main_towerDown'] -= 4
+                if self.image == 'Archer':
+                    main_towerDown.healthtowers['main_towerDown'] -= 2
+                if self.image == 'Musketeers':
+                    main_towerDown.healthtowers['main_towerDown'] -= 4
+                if self.image == 'hunter':
+                    main_towerDown.healthtowers['main_towerDown'] -= 4
         if self.health[str(self.image)] <= 0:
             return False
         else:
@@ -509,7 +623,7 @@ class soldier():
                 self.fireDownToUp()
                 self.drawBulletDownToUp()
                 self.health[str(self.image)] -= 5
-        if self.y == 382 and self.x == 536 and self.health[str(self.image)] > 0 and tower1.healthtowers['tower1'] > 0:
+        if self.y == 385 and self.x == 536 and self.health[str(self.image)] > 0 and tower1.healthtowers['tower1'] > 0:
             if int(timer) % 2 == 0:
                 tower1.fireforUnarmed(550, 410)
                 self.fireUpToDown()
@@ -524,7 +638,7 @@ class soldier():
                     tower1.healthtowers['tower1'] -= 6
                 self.health[str(self.image)] -= 5
 
-        elif self.y == 382 and self.x == 753 and self.health[str(self.image)] > 0 and tower2.healthtowers['tower2'] > 0:
+        elif self.y == 385 and self.x == 753 and self.health[str(self.image)] > 0 and tower2.healthtowers['tower2'] > 0:
             if int(timer) % 2 == 0:
                 tower2.fireforUnarmed(765, 410)
                 self.fireUpToDown()
@@ -538,11 +652,78 @@ class soldier():
                 if self.image == 'Barbarian':
                     tower2.healthtowers['tower2'] -= 6
                 self.health[str(self.image)] -= 5
+        elif self.y == 90 and self.x == 595 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
+            if int(timer)%2 == 0:
+                bullet2 = self.pygame.image.load('bullet2.png')
+                self.surface.blit(bullet2,(625,90))
+                self.surface.blit(bullet2,(625,100))
+                self.health[str(self.image)] -= 5
+                if self.image == 'Knight':
+                    main_towerUp.healthtowers['main_towerUp'] -= 4
+                if self.image == 'giant':
+                    main_towerUp.healthtowers['main_towerUp'] -= 7
+                if self.image == 'hog':
+                    main_towerUp.healthtowers['main_towerUp'] -= 5
+                if self.image == 'Barbarian':
+                    main_towerUp.healthtowers['main_towerUp'] -= 6
+        elif self.y == 90 and self.x == 690 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
+            if int(timer)%2 == 0:
+                bullet2 = self.pygame.image.load('bullet2.png')
+                self.surface.blit(bullet2,(680,90))
+                self.surface.blit(bullet2,(680,100))
+                self.health[str(self.image)] -= 5
+                if self.image == 'Knight':
+                    main_towerUp.healthtowers['main_towerUp'] -= 4
+                if self.image == 'giant':
+                    main_towerUp.healthtowers['main_towerUp'] -= 7
+                if self.image == 'hog':
+                    main_towerUp.healthtowers['main_towerUp'] -= 5
+                if self.image == 'Barbarian':
+                    main_towerUp.healthtowers['main_towerUp'] -= 6
+        elif self.y == 490 and self.x == 595 and self.health[str(self.image)]>0 and main_towerDown.healthtowers['main_towerDown']>0:
+            if int(timer)%2 == 0:
+                bullet2 = self.pygame.image.load('bullet2.png')
+                self.surface.blit(bullet2,(625,515))
+                self.surface.blit(bullet2,(625,505))
+                self.health[str(self.image)] -= 5
+                if self.image == 'Knight':
+                    main_towerDown.healthtowers['main_towerDown'] -= 4
+                if self.image == 'giant':
+                    main_towerDown.healthtowers['main_towerDown'] -= 7
+                if self.image == 'hog':
+                    main_towerDown.healthtowers['main_towerDown'] -= 5
+                if self.image == 'Barbarian':
+                    main_towerDown.healthtowers['main_towerDown'] -= 6
+        elif self.y == 490 and self.x == 690 and self.health[str(self.image)]>0 and main_towerDown.healthtowers['main_towerDown']>0:
+            if int(timer)%2 == 0:
+                bullet2 = self.pygame.image.load('bullet2.png')
+                self.surface.blit(bullet2,(680,515))
+                self.surface.blit(bullet2,(680,505))
+                self.health[str(self.image)] -= 5
+                if self.image == 'Knight':
+                    main_towerDown.healthtowers['main_towerDown'] -= 4
+                if self.image == 'giant':
+                    main_towerDown.healthtowers['main_towerDown'] -= 7
+                if self.image == 'hog':
+                    main_towerDown.healthtowers['main_towerDown'] -= 5
+                if self.image == 'Barbarian':
+                    main_towerDown.healthtowers['main_towerDown'] -= 6
         if self.health[str(self.image)] <= 0:
             return False
         else:
             return True
-
+    def fireTomainTowerUp(self):
+        self.Bullets.append(Bullet(self.x,self.y,self.pygame,self.surface))
+    def drawTomainTowerUp(self):
+        for i in self.Bullets:
+            i.moveToUp()
+            i.drawTomainTowerUp()
+    def fireTomainTowerDown(self):
+        self.Bullets.append(Bullet(self.x, self.y, self.pygame, self.surface))
+    def drawTomainTowerDown(self):
+        for i in self.Bullets:
+            i.moveToDown()
+            i.drawTomainTowerDown()
     def fireDownToUp(self):
         self.Bullets.append(Bullet(self.x, self.y, self.pygame, self.surface))
 
@@ -568,8 +749,7 @@ class tower():
         self.surface = surface
         self.BulletsUpToDown = []
         self.BulletDownToUp = []
-        self.healthtowers = {'tower1': 2786, 'tower2': 2786, 'tower3': 2786, 'tower4': 2786}
-
+        self.healthtowers = {'tower1': 2786, 'tower2': 2786, 'tower3': 2786, 'tower4': 2786,'main_towerUp':3000 ,'main_towerDown':3000}
     def fireUpToDown(self):
         self.BulletsUpToDown.append(Bullet(self.x, self.y, self.pygame, self.surface))
 
@@ -585,10 +765,17 @@ class tower():
         for i in self.BulletDownToUp:
             i.moveToUp()
             i.drawbulletDownToUp()
-
     def fireforUnarmed(self, x, y):
         bulletimage = self.pygame.image.load('bullet.png')
         self.surface.blit(bulletimage, (x, y))
+    def drawFrommainTowerU(self):
+        for i in self.BulletsUpToDown:
+            i.moveToDown()
+            i.drawFrommainTowerUp()
+    def drawFrommainTowerD(self):
+        for i in self.BulletDownToUp:
+            i.moveToUp()
+            i.drawFrommainTowerDown()
 
 
 class Bullet():
@@ -624,6 +811,22 @@ class Bullet():
         if self.y < 420:
             bulletimage = self.pygame.image.load('bullet.png')
             self.surface.blit(bulletimage, (self.x, self.y))
+    def drawTomainTowerUp(self):
+        if self.y > 108:
+            bulletimage = self.pygame.image.load('bullet.png')
+            self.surface.blit(bulletimage, (self.x, self.y))
+    def drawFrommainTowerDown(self):
+        if self.y > 410:
+            bulletimage = self.pygame.image.load('bullet.png')
+            self.surface.blit(bulletimage, (self.x, self.y))
+    def drawFrommainTowerUp(self):
+        if self.y <180:
+            bulletimage = self.pygame.image.load('bullet.png')
+            self.surface.blit(bulletimage, (self.x, self.y))
+    def drawTomainTowerDown(self):
+        if self.y < 480:
+            bulletimage = self.pygame.image.load('bullet.png')
+            self.surface.blit(bulletimage, (self.x, self.y))
 
 
 windowwidth = 1280
@@ -654,6 +857,8 @@ tower1 = tower(548, 420, pygame, window)
 tower2 = tower(765, 420, pygame, window)
 tower3 = tower(548, 148, pygame, window)
 tower4 = tower(765, 148, pygame, window)
+main_towerUp = tower(670,104,pygame,window)
+main_towerDown = tower(670,500,pygame,window)
 
 
 def destroyedTower():
@@ -751,7 +956,7 @@ playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
-    print(mousepos)
+    # print(mousepos)
     window.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
