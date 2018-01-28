@@ -388,7 +388,7 @@ class soldier():
                 self.x += 1
             if 536 < self.x < 670 and self.y!=180 and self.y!=260:
                 self.x -= 1
-            if self.y > 180 and tower4.healthtowers['tower4']<=0:
+            if self.y > 180 and self.x<690:
                 self.y-=1
             if self.y == 180 and self.x <650:
                 self.x += 1
@@ -399,7 +399,7 @@ class soldier():
                 self.x -=1
             if self.y == 180 and self.x > 650:
                 self.x -= 1
-            if self.y > 180 and tower3.healthtowers['tower3']<=0:
+            if self.y > 180 and self.x>690:
                 self.y -= 1
     def moveplayer2(self):
         if tower1.healthtowers['tower1']>0:
@@ -421,7 +421,7 @@ class soldier():
                 self.x += 1
             if 536 < self.x < 670 and self.y!=385 and self.y!=325:
                 self.x -= 1
-            if self.y < 385 and tower2.healthtowers['tower2']<=0:
+            if self.y < 385 and self.x<690:
                 self.y+=1
             if self.y == 385 and self.x <650:
                 self.x += 1
@@ -432,7 +432,7 @@ class soldier():
                 self.x -=1
             if self.y == 385 and self.x > 650:
                 self.x -= 1
-            if self.y < 385 and tower1.healthtowers['tower1']<=0:
+            if self.y < 385 and self.x>690:
                 self.y += 1
     def moveplayer2Unarmed(self):
         if tower1.healthtowers['tower1']>0:
@@ -456,16 +456,16 @@ class soldier():
                 self.x -= 1
             if self.y == 490 and self.x < 595:
                 self.x += 1
-            if self.y < 490 and tower2.healthtowers['tower2']<=0:
+            if self.y < 490 and self.x<690:
                 self.y += 1
         if tower2.healthtowers['tower2']<=0:
             if 670 < self.x < 753 and self.y!=490  and self.y!=385:
                 self.x += 1
             if 753 < self.x < 865 and self.y !=490 and self.y !=385:
                 self.x -=1
-            if self.y == 490 and self.x > 690:
+            if self.y == 490 and self.x > 595:
                 self.x -= 1
-            if self.y < 490 and tower1.healthtowers['tower1']<=0:
+            if self.y < 490 and self.x>690:
                 self.y += 1
     def moveplayer1Unarmed(self):
         if tower3.healthtowers['tower3']>0:
@@ -489,7 +489,7 @@ class soldier():
                 self.x -= 1
             if self.y == 90 and self.x < 595:
                 self.x += 1
-            if self.y > 90 and tower4.healthtowers['tower4']<=0:
+            if self.y > 90 and self.x <690:
                 self.y -= 1
         if tower4.healthtowers['tower4']<=0:
             if 670 < self.x < 753 and self.y!=90  and self.y!=180:
@@ -498,7 +498,7 @@ class soldier():
                 self.x -=1
             if self.y == 90 and self.x > 690:
                 self.x -= 1
-            if self.y > 90 and tower3.healthtowers['tower3']<=0:
+            if self.y > 90 and self.x>690:
                 self.y -= 1
     def healthheroes(self):
         if self.y == 260 and self.x == 536:
@@ -508,7 +508,7 @@ class soldier():
                     tower3.healthtowers['tower3'] -= 4
                 if self.image == 'Archer':
                     tower3.healthtowers['tower3'] -= 2
-                if self.image == 'Musketters':
+                if self.image == 'Musketeers':
                     tower3.healthtowers['tower3'] -= 4
                 if self.image == 'hunter':
                     tower3.healthtowers['tower3'] -= 4
@@ -523,7 +523,7 @@ class soldier():
                     tower4.healthtowers['tower4'] -= 4
                 if self.image == 'Archer':
                     tower4.healthtowers['tower4'] -= 2
-                if self.image == 'Musketters':
+                if self.image == 'Musketeers':
                     tower4.healthtowers['tower4'] -= 4
                 if self.image == 'hunter':
                     tower4.healthtowers['tower4'] -= 4
@@ -539,7 +539,7 @@ class soldier():
                     tower1.healthtowers['tower1'] -= 4
                 if self.image == 'Archer':
                     tower1.healthtowers['tower1'] -= 2
-                if self.image == 'Musketters':
+                if self.image == 'Musketeers':
                     tower1.healthtowers['tower1'] -= 4
                 if self.image == 'hunter':
                     tower1.healthtowers['tower1'] -= 4
@@ -551,13 +551,13 @@ class soldier():
                 self.fireUpToDown()
                 self.drawBulletUpToDown()
                 if self.image == 'Wizard':
-                    tower3.healthtowers['tower2'] -= 4
+                    tower2.healthtowers['tower2'] -= 4
                 if self.image == 'Archer':
-                    tower3.healthtowers['tower2'] -= 2
-                if self.image == 'Musketters':
-                    tower3.healthtowers['tower2'] -= 4
+                    tower2.healthtowers['tower2'] -= 2
+                if self.image == 'Musketeers':
+                    tower2.healthtowers['tower2'] -= 4
                 if self.image == 'hunter':
-                    tower3.healthtowers['tower2'] -= 4
+                    tower2.healthtowers['tower2'] -= 4
                 self.health[str(self.image)] -= 5
         elif self.y == 180 and self.x == 650 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
             if int(timer)%2 == 0:
