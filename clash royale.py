@@ -463,7 +463,7 @@ class soldier():
                 self.x += 1
             if 753 < self.x < 865 and self.y !=490 and self.y !=385:
                 self.x -=1
-            if self.y == 490 and self.x > 595:
+            if self.y == 490 and self.x > 690:
                 self.x -= 1
             if self.y < 490 and self.x>690:
                 self.y += 1
@@ -878,9 +878,11 @@ def destroyedTower():
     if main_towerDown.healthtowers['main_towerDown'] <= 0 :
          window.blit(destroyed_tower, (605, 470))
 
-check_win = False
+check_win = False          #for match is draw when timer is 0 and 60 additional second
+check_win2 = False         #for highliting winner when timer = 0  and match is not draw
+
 def draw_game():
-    global score1, score2, score3, score4 ,score5 ,score6
+    global score1, score2, score3, score4 ,score5 ,score6 ,counter_player1 ,counter_player2
     global hat, x, y
     window.blit(battleScreen, (0, 0))
     window.blit(box, (934, 475))
@@ -889,6 +891,8 @@ def draw_game():
     window.blit(timer_box, (80, 20))
     destroyedTower()
 
+    counter_player1 = 0  # for highliting winner when timer = 0  and match is not draw
+    counter_player2 = 0  # for highliting winner when timer = 0  and match is not draw
     score1 = False
     score2 = False
     score3 = False
@@ -899,17 +903,21 @@ def draw_game():
     # window.blit(one, (0, 0))
     if tower1.healthtowers['tower1'] <= 0 or tower2.healthtowers['tower2'] <= 0:
         score1 = True
+        counter_player2 += 1
     if tower1.healthtowers['tower1'] <= 0 and tower2.healthtowers['tower2'] <= 0:
         score1 = False
         score2 = True
+        counter_player2 += 1
     if score2 == True and main_towerDown.healthtowers['main_towerDown'] <= 0:
         score5 = True
     if tower3.healthtowers['tower3'] <= 0 or tower4.healthtowers['tower4'] <= 0:
         score3 = True
+        counter_player1 += 1
     if tower3.healthtowers['tower3'] <= 0 and tower4.healthtowers['tower4'] <= 0:
         score3 = False
         score4 = True
-    if score4 == True and main_towerUp.healthtowers['main_towerUp'] <= 0 :
+        counter_player1 += 1
+    if score4 == True and main_towerUp.healthtowers['main_towerUp'] <= 0:
         score6 = True
     if score1 == True:
         window.blit(one, (1050, 213))
@@ -951,11 +959,16 @@ def winning_match():
     if main_towerDown.healthtowers['main_towerDown'] <= 0 :
         check_win = True
         window.blit(red_winner, (130,0))
+        battle_sound.stop()
+        victory_sound.play(-1)
     if main_towerUp.healthtowers['main_towerUp'] <= 0 :
         check_win = True
         window.blit(blue_winner, (130,0))
+        battle_sound.stop()
+        victory_sound.play(-1)
 
 
+check_win3 = False
 counter = 0
 match_draw = False
 if match_draw == False :
@@ -963,29 +976,31 @@ if match_draw == False :
     dt = 0
 
 def timer2():
-    global timer,dt ,counter, match_draw, check_win
+    global timer,dt ,counter, match_draw, check_win , check_win3
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 40)
     blue = pygame.Color('red')
     if counter == 1 and score1 == score2 == score3 == score4 == False:
         match_draw = True
+    # elif counter == 1 and (score1 == score3 == True) :
+    #     match_draw = True
     timer -= dt
     if timer <= 0:
         timer = 0
         counter = 1
-        if match_draw == True:
+        if match_draw == True:      #for match is draw when timer is 0 and 60 additional second
             timer = 60
             dt = 0
-    if match_draw == True:
+    if match_draw == True:          #for match is draw when timer is 0 and 60 additional second
         if score1 == True :
-            check_win = True
+            check_win3 = True
 
         if score3 == True:
-            check_win = True
-
+            check_win3 = True
     txt = font.render(str(round(timer, 1)), True, blue)
     window.blit(txt, (90, 30))
     dt = clock.tick(250) / 100
+
 
 draw_guidance = False
 start_battle = False
@@ -1056,11 +1071,26 @@ while True:
             y2 -= 5
         if hat2[1] == -1:
             y2 += 5
-        if check_win == False :
+        if check_win == False and check_win2 == False and check_win3 == False:
             draw_game()
             timer2()
+        if timer == 0 and main_towerDown.healthtowers['main_towerDown'] > 0 \
+                and main_towerUp.healthtowers['main_towerUp'] > 0:
+            # for highliting winner when timer = 0  and match is not draw
+            if counter_player1 > counter_player2:
+                check_win2 = True
+                battle_sound.stop()
+                window.blit(blue_winner, (130, 0))
+                victory_sound.play(-1)
+            if counter_player1 < counter_player2:
+                check_win2 = True
+                window.blit(red_winner, (130, 0))
+                battle_sound.stop()
+                victory_sound.play(-1)
+            else:
+                pass
 
-        if check_win == True:
+        if check_win3 == True:  # for match is draw when timer is 0 and 60 additional second
             battle_sound.stop()
             victory_sound.play(-1)
             if score1 == True:
