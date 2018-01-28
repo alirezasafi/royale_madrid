@@ -835,6 +835,8 @@ window = pygame.display.set_mode((windowwidth, windowheight), pygame.FULLSCREEN)
 battleScreen = pygame.image.load('battle Screen.jpg')
 start_Screen = pygame.image.load('start_Screen.jpg')
 guidance = pygame.image.load('guidance.png')
+blue_winner = pygame.image.load('blue winner.png')
+red_winner = pygame.image.load('red winner.png')
 one = pygame.image.load('1.png')
 two = pygame.image.load('2.png')
 three = pygame.image.load('3.png')
@@ -844,6 +846,7 @@ timer_icon = pygame.image.load('timer_icon.png')
 timer_box = pygame.image.load('timer_box.png')
 elixir = pygame.image.load('elixir.jpg')
 destroyed_tower = pygame.image.load('tower destroyed.jpg')
+victory_sound = pygame.mixer.Sound('victory_sound.ogg')
 player = player(windowwidth / 2, windowheight / 2, pygame, window)
 player2 = player2(windowwidth / 2, windowheight / 2, pygame, window)
 start_sound = pygame.mixer.Sound('menu.ogg')
@@ -870,10 +873,14 @@ def destroyedTower():
         window.blit(destroyed_tower, (500, 102))
     if tower4.healthtowers['tower4'] <= 0:
         window.blit(destroyed_tower, (720, 100))
+    if  main_towerUp.healthtowers['main_towerUp'] <= 0:
+        window.blit(destroyed_tower, (617 , 49))
+    if main_towerDown.healthtowers['main_towerDown'] <= 0 :
+         window.blit(destroyed_tower, (605, 470))
 
-
+check_win = False
 def draw_game():
-    global score1, score2, score3, score4
+    global score1, score2, score3, score4 ,score5 ,score6
     global hat, x, y
     window.blit(battleScreen, (0, 0))
     window.blit(box, (934, 475))
@@ -886,7 +893,8 @@ def draw_game():
     score2 = False
     score3 = False
     score4 = False
-
+    score5 = False
+    score6 = False
     # window.blit(two, (150, 350))
     # window.blit(one, (0, 0))
     if tower1.healthtowers['tower1'] <= 0 or tower2.healthtowers['tower2'] <= 0:
@@ -894,11 +902,15 @@ def draw_game():
     if tower1.healthtowers['tower1'] <= 0 and tower2.healthtowers['tower2'] <= 0:
         score1 = False
         score2 = True
+    if score2 == True and main_towerDown.healthtowers['main_towerDown'] <= 0:
+        score5 = True
     if tower3.healthtowers['tower3'] <= 0 or tower4.healthtowers['tower4'] <= 0:
         score3 = True
     if tower3.healthtowers['tower3'] <= 0 and tower4.healthtowers['tower4'] <= 0:
         score3 = False
         score4 = True
+    if score4 == True and main_towerUp.healthtowers['main_towerUp'] <= 0 :
+        score6 = True
     if score1 == True:
         window.blit(one, (1050, 213))
         window.blit(red_crown, (1050, 177))
@@ -917,6 +929,12 @@ def draw_game():
     if score3 == False and score4 == False:
         window.blit(blue_crown, (1050, 333))
         # window.blit(zero , (1055,350))
+    if score5 == True:
+        window.blit(three, (1040, 205))
+        window.blit(red_crown, (1050, 177))
+    if score6 == True:
+        window.blit(three, (1040, 340))
+        window.blit(blue_crown, (1050, 310))
     player.push()
     player2.push()
     player.click(L1, L2, R1, R2, X, x1, y1)
@@ -928,20 +946,43 @@ def draw_game():
     tower3.drawUpToDown()
     tower4.drawUpToDown()
 
+def winning_match():
+    global check_win
+    if main_towerDown.healthtowers['main_towerDown'] <= 0 :
+        check_win = True
+        window.blit(red_winner, (130,0))
+    if main_towerUp.healthtowers['main_towerUp'] <= 0 :
+        check_win = True
+        window.blit(blue_winner, (130,0))
 
-timer = 100
-dt = 0
 
+counter = 0
+match_draw = False
+if match_draw == False :
+    timer = 100
+    dt = 0
 
 def timer2():
-    global timer, dt
+    global timer,dt ,counter, match_draw, check_win
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 40)
     blue = pygame.Color('red')
-
+    if counter == 1 and score1 == score2 == score3 == score4 == False:
+        match_draw = True
     timer -= dt
     if timer <= 0:
         timer = 0
+        counter = 1
+        if match_draw == True:
+            timer = 60
+            dt = 0
+    if match_draw == True:
+        if score1 == True :
+            check_win = True
+
+        if score3 == True:
+            check_win = True
+
     txt = font.render(str(round(timer, 1)), True, blue)
     window.blit(txt, (90, 30))
     dt = clock.tick(250) / 100
@@ -956,7 +997,7 @@ playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
-    # print(mousepos)
+    #print(mousepos)
     window.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -997,7 +1038,7 @@ while True:
     R12 = joystick.get_button(6)
     R22 = joystick.get_button(7)
     X2 = joystick.get_button(2)
-
+    winning_match()
     if start_battle == True:
         if hat[0] == 1:
             x1 += 5
@@ -1015,9 +1056,17 @@ while True:
             y2 -= 5
         if hat2[1] == -1:
             y2 += 5
-        draw_game()
-        timer2()
-        # print(tower2.healthtowers['tower2'])
+        if check_win == False :
+            draw_game()
+            timer2()
+
+        if check_win == True:
+            battle_sound.stop()
+            victory_sound.play(-1)
+            if score1 == True:
+                window.blit(red_winner, (130, 0))
+            if score3 == True:
+                window.blit(blue_winner, (130, 0))
 
     elif draw_guidance == True:
         window.blit(guidance,(100,0))
