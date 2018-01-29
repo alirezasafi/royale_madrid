@@ -163,7 +163,7 @@ class player():
             self.surface.blit(elixir, (932, 428))
 
     def pointer_position(self, x, y):
-        self.pygame.draw.circle(self.surface, (255, 255, 255), (x, y), 5, 0)
+        self.pygame.draw.circle(self.surface, (0, 0, 255), (x, y), 5, 0)
 
     def drawsoldier(self):
         for b in self.soldiers:
@@ -339,7 +339,7 @@ class player2():
             self.surface.blit(elixir, (280, 178))
 
     def pointer_position(self, x, y):
-        self.pygame.draw.circle(self.surface, (255, 255, 255), (x, y), 5, 0)
+        self.pygame.draw.circle(self.surface, (255, 0, 0), (x, y), 5, 0)
 
     def drawsoldier(self):
         for b in self.soldiers:
@@ -967,8 +967,9 @@ def winning_match():
         battle_sound.stop()
         victory_sound.play(-1)
 
-
+equal_match = False
 check_win3 = False
+check_win4 = False
 counter = 0
 match_draw = False
 if match_draw == False :
@@ -976,14 +977,15 @@ if match_draw == False :
     dt = 0
 
 def timer2():
-    global timer,dt ,counter, match_draw, check_win , check_win3
+    global timer,dt ,counter, match_draw, check_win , check_win3 ,counter_player1 ,counter_player2, equal_match , check_win4
     clock = pygame.time.Clock()
     font = pygame.font.Font(None, 40)
     blue = pygame.Color('red')
     if counter == 1 and score1 == score2 == score3 == score4 == False:
         match_draw = True
-    # elif counter == 1 and (score1 == score3 == True) :
-    #     match_draw = True
+    elif counter == 1 and  counter_player1 == counter_player2:
+        equal_match = True
+
     timer -= dt
     if timer <= 0:
         timer = 0
@@ -991,17 +993,22 @@ def timer2():
         if match_draw == True:      #for match is draw when timer is 0 and 60 additional second
             timer = 60
             dt = 0
+        if equal_match == True:
+            timer = 45
+            dt = 0
     if match_draw == True:          #for match is draw when timer is 0 and 60 additional second
         if score1 == True :
             check_win3 = True
-
         if score3 == True:
             check_win3 = True
+    if equal_match == True:         #when destroyed tower player1 = destroyed tower player 2
+        check_win4 = True
+
     txt = font.render(str(round(timer, 1)), True, blue)
     window.blit(txt, (90, 30))
     dt = clock.tick(250) / 100
 
-
+check_win5 = False
 draw_guidance = False
 start_battle = False
 x1 = 640
@@ -1071,7 +1078,7 @@ while True:
             y2 -= 5
         if hat2[1] == -1:
             y2 += 5
-        if check_win == False and check_win2 == False and check_win3 == False:
+        if check_win == False and check_win2 == False and check_win3 == False and check_win5 == False:
             draw_game()
             timer2()
         if timer == 0 and main_towerDown.healthtowers['main_towerDown'] > 0 \
@@ -1097,6 +1104,18 @@ while True:
                 window.blit(red_winner, (130, 0))
             if score3 == True:
                 window.blit(blue_winner, (130, 0))
+        if check_win4 == True :
+            if counter_player1 > counter_player2 :
+                battle_sound.stop()
+                victory_sound.play(-1)
+                window.blit(blue_winner, (130, 0))
+                check_win5 = True
+
+            if counter_player1 < counter_player2:
+                battle_sound.stop()
+                victory_sound.play(-1)
+                window.blit(red_winner, (130, 0))
+                check_win5 = True
 
     elif draw_guidance == True:
         window.blit(guidance,(100,0))
