@@ -343,6 +343,8 @@ class player2():
 
     def drawsoldier(self):
         for b in self.soldiers:
+            if b.health[str(b.image)] <= 0:
+                self.soldiers.remove(b)
             if b.image == 'giant' or b.image == 'Knight' or b.image == 'hog' or b.image == 'Barbarian':
                 if b.healthheroesUnarmed() == True:
                     b.moveplayer2Unarmed()
@@ -365,14 +367,15 @@ class soldier():
                        'hog': 944, 'Musketeers': 600}
 
     def drawhero(self):
-        image = self.pygame.image.load(str(self.image) + '.jpg')
-        self.surface.blit(image, (self.x, self.y))
+        if self.health[str(self.image)] > 0:
+            image = self.pygame.image.load(str(self.image) + '.jpg')
+            self.surface.blit(image, (self.x, self.y))
 
     def moveplayer1(self):
         if tower3.healthtowers['tower3']>0:
             if 470 < self.x < 536:
                 self.x += 1
-            if 536 < self.x < 670:
+            if 536 < self.x < 660:
                 self.x -= 1
             if 260 < self.y < 680 and self.x == 536:
                 self.y -= 1
@@ -390,14 +393,14 @@ class soldier():
                 self.x -= 1
             if self.y > 180 and self.x<690:
                 self.y-=1
-            if self.y == 180 and self.x <650:
+            if self.y == 180 and self.x <660:
                 self.x += 1
         if tower4.healthtowers['tower4']<=0:
             if 670 < self.x < 753 and self.y!=180  and self.y!=260:
                 self.x += 1
             if 753 < self.x < 865 and self.y !=180 and self.y !=260:
                 self.x -=1
-            if self.y == 180 and self.x > 650:
+            if self.y == 180 and self.x > 660:
                 self.x -= 1
             if self.y > 180 and self.x>690:
                 self.y -= 1
@@ -405,7 +408,7 @@ class soldier():
         if tower1.healthtowers['tower1']>0:
             if 470 < self.x < 536:
                 self.x += 1
-            if 536 < self.x < 670:
+            if 536 < self.x < 660:
                 self.x -= 1
             if 65 < self.y < 325 and self.x == 536:
                 self.y += 1
@@ -423,14 +426,14 @@ class soldier():
                 self.x -= 1
             if self.y < 385 and self.x<690:
                 self.y+=1
-            if self.y == 385 and self.x <650:
+            if self.y == 385 and self.x <660:
                 self.x += 1
         if tower2.healthtowers['tower2']<=0:
             if 670 < self.x < 753 and self.y!=385  and self.y!=325:
                 self.x += 1
             if 753 < self.x < 865 and self.y !=385 and self.y !=325:
                 self.x -=1
-            if self.y == 385 and self.x > 650:
+            if self.y == 385 and self.x > 660:
                 self.x -= 1
             if self.y < 385 and self.x>690:
                 self.y += 1
@@ -559,7 +562,7 @@ class soldier():
                 if self.image == 'hunter':
                     tower2.healthtowers['tower2'] -= 4
                 self.health[str(self.image)] -= 5
-        elif self.y == 180 and self.x == 650 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
+        elif self.y == 180 and self.x == 660 and self.health[str(self.image)]>0 and main_towerUp.healthtowers['main_towerUp']>0:
             if int(timer)%2 == 0:
                 main_towerUp.fireUpToDown()
                 main_towerUp.drawFrommainTowerU()
@@ -574,7 +577,7 @@ class soldier():
                     main_towerUp.healthtowers['main_towerUp'] -= 4
                 if self.image == 'hunter':
                     main_towerUp.healthtowers['main_towerUp'] -= 4
-        elif self.y == 385 and self.x == 650 and self.health[str(self.image)]>0 and main_towerDown.healthtowers['main_towerDown']>0:
+        elif self.y == 385 and self.x == 660 and self.health[str(self.image)]>0 and main_towerDown.healthtowers['main_towerDown']>0:
             if int(timer)%2 == 0:
                 main_towerDown.fireDownToUp()
                 main_towerDown.drawFrommainTowerD()
@@ -862,7 +865,7 @@ tower3 = tower(548, 148, pygame, window)
 tower4 = tower(765, 148, pygame, window)
 main_towerUp = tower(670,104,pygame,window)
 main_towerDown = tower(670,500,pygame,window)
-
+font = pygame.font.Font(None,30)
 
 def destroyedTower():
     if tower1.healthtowers['tower1'] <= 0:
@@ -890,7 +893,24 @@ def draw_game():
     window.blit(timer_icon, (10, 20))
     window.blit(timer_box, (80, 20))
     destroyedTower()
-
+    tower1h = font.render(str(tower1.healthtowers['tower1']), True, (0, 0, 255))
+    if tower1.healthtowers['tower1']>0:
+        window.blit(tower1h, [530, 490])
+    tower2h = font.render(str(tower2.healthtowers['tower2']),True,(0,0,255))
+    if tower2.healthtowers['tower2']>0:
+        window.blit(tower2h,[750,490])
+    mainTowerDownh = font.render(str(main_towerDown.healthtowers['main_towerDown']),True,(0,0,255))
+    if main_towerDown.healthtowers['main_towerDown'] > 0:
+        window.blit(mainTowerDownh, [640, 550])
+    tower3h = font.render(str(tower3.healthtowers['tower3']),True,(255,0,0))
+    if tower3.healthtowers['tower3']>0:
+        window.blit(tower3h,[530,85])
+    tower4h = font.render(str(tower4.healthtowers['tower4']),True,(255,0,0))
+    if tower4.healthtowers['tower4']>0:
+        window.blit(tower4h,[750,85])
+    mainTowerUph = font.render(str(main_towerUp.healthtowers['main_towerUp']),True,(255,0,0))
+    if main_towerUp.healthtowers['main_towerUp'] > 0:
+        window.blit(mainTowerUph, [630, 30])
     counter_player1 = 0  # for highliting winner when timer = 0  and match is not draw
     counter_player2 = 0  # for highliting winner when timer = 0  and match is not draw
     score1 = False
@@ -1019,7 +1039,7 @@ playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
-    #print(mousepos)
+    print(mousepos)
     window.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -1046,8 +1066,8 @@ while True:
     hat = joystick.get_hat(0)
     butttons = joystick.get_numbuttons()
     L1 = joystick.get_button(4)
-    L2 = joystick.get_button(5)
-    R1 = joystick.get_button(6)
+    L2 = joystick.get_button(6)
+    R1 = joystick.get_button(5)
     R2 = joystick.get_button(7)
     X = joystick.get_button(2)
     joystick = pygame.joystick.Joystick(1)
@@ -1056,8 +1076,8 @@ while True:
     hat2 = joystick.get_hat(0)
     butttons2 = joystick.get_numbuttons()
     L12 = joystick.get_button(4)
-    L22 = joystick.get_button(5)
-    R12 = joystick.get_button(6)
+    L22 = joystick.get_button(6)
+    R12 = joystick.get_button(5)
     R22 = joystick.get_button(7)
     X2 = joystick.get_button(2)
     winning_match()
