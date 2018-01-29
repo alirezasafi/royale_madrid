@@ -1039,7 +1039,6 @@ playSound = True
 while True:
     mouseState = pygame.mouse.get_pressed()
     mousepos = pygame.mouse.get_pos()
-    print(mousepos)
     window.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
